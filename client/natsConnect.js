@@ -8,13 +8,19 @@
     let t = console;
     let port = process.env.NATS_PORT || 4222;
     let token = process.env.NATS_TOKEN || 'mytoken';
+    let user = process.env.NATS_USER || '';
+    let pass = process.env.NATS_PASS || '';
     let url = process.env.NATS_URL || 'nats://demo.nats.io';
 
     let nc;
     class NatsConnect {
         constructor () {
             t.log("connecting...");
-            nc = NATS.connect({url: `${url}:${port}`, token: token});
+            if(user && pass) {
+                nc = NATS.connect({url: `${url}:${port}`, user: user, pass: pass});
+            } else {
+                nc = NATS.connect({url: `${url}:${port}`, token: token});
+            }
             t.log("connected!!");
         }
 
@@ -49,7 +55,7 @@
 
         fireAndForget (subject, message) {
             return new Promise((resolve, reject) => {
-                resolve(nc.publish(subject, message));
+                resolve(nc.publish(subject, JSON.stringify(message)));
             });
         }
     }

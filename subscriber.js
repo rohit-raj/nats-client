@@ -14,4 +14,11 @@
         console.log("rcvd body fireAndForget => ", body);
     });
 
+    nats.subscribeToSubject("sendBody").then(body => {
+        console.log("rcvd body fireAndForget => ", body);
+        let values = JSON.parse(body);
+        console.log("name ==> ", values.name);
+
+    });
+
 })();
