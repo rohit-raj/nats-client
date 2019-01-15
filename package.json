@@ -8,6 +8,6 @@
   "dependencies": {
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
-    "nats": "^1.0.1"
+    "nats": "^1.2.2"
   }
 }
